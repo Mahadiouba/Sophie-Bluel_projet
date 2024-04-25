@@ -14,3 +14,4 @@ async function getCategories() {
         return categories
     } catch (error) { window.alert(error)}
 }
+
