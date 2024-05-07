@@ -40,5 +40,45 @@ function buildGallery(works, type) {
 }
 
 function buildFilters(categories) {
+  const filtersContainer = document.querySelector(".filters");
   
+  // Création d'un bouton "Toutes les catégories"
+  const allButton = document.createElement("button");
+  allButton.textContent = "Toutes les catégories";
+  allButton.addEventListener("click", () => {
+    // Afficher toutes les œuvres
+    showAllWorks();
+  });
+  filtersContainer.appendChild(allButton);
+
+  // Création d'un bouton pour chaque catégorie
+  categories.forEach((category) => {
+    const button = document.createElement("button");
+    button.textContent = category.name;
+    button.addEventListener("click", () => {
+      // Filtrer les œuvres en fonction de la catégorie
+      filterWorksByCategory(category.id);
+    });
+    filtersContainer.appendChild(button);
+  });
+}
+
+function showAllWorks() {
+  const gallery = document.querySelector(".gallery");
+  // Supprimer toutes les œuvres actuellement affichées
+  gallery.innerHTML = "";
+  // Re-construire la galerie avec toutes les œuvres
+  getWorks().then((works) => buildGallery(works, "mainGallery"));
+}
+
+function filterWorksByCategory(categoryId) {
+  const gallery = document.querySelector(".gallery");
+  // Supprimer toutes les œuvres actuellement affichées
+  gallery.innerHTML = "";
+  // Récupérer les œuvres de la catégorie spécifiée
+  getWorks().then((works) => {
+    const filteredWorks = works.filter((work) => work.category === categoryId);
+    // Re-construire la galerie avec les œuvres filtrées
+    buildGallery(filteredWorks, "mainGallery");
+  });
 }
