@@ -44,7 +44,7 @@ function buildFilters(categories) {
   
   // Création d'un bouton "Toutes les catégories"
   const allButton = document.createElement("button");
-  allButton.textContent = "Toutes les catégories";
+  allButton.textContent = "Tous";
   allButton.addEventListener("click", () => {
     // Afficher toutes les œuvres
     showAllWorks();
@@ -61,7 +61,10 @@ function buildFilters(categories) {
     });
     filtersContainer.appendChild(button);
   });
+  
 }
+console.log(buildFilters);
+
 
 function showAllWorks() {
   const gallery = document.querySelector(".gallery");
@@ -82,3 +85,6 @@ function filterWorksByCategory(categoryId) {
     buildGallery(filteredWorks, "mainGallery");
   });
 }
+
+
+
