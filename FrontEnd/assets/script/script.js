@@ -19,72 +19,69 @@ async function getCategories() {
   }
 }
 
+
 (() => {
   getWorks().then((works) => buildGallery(works, "mainGallery"));
   getCategories().then((categories) => buildFilters(categories));
 })();
 
-function buildGallery(works, type) {
-  for (let i in works) {
-    let figureWork = document.createElement("figure");
-    let imageWork = document.createElement("img");
-    let captionWork = document.createElement("figcaption");
 
-    imageWork.src = works[i].imageUrl;
-    imageWork.alt = works[i].title;
-    captionWork.innerText = works[i].title;
+// Build the gallery with works
+function buildGallery(works) {
+  const gallery = document.querySelector(".gallery");
+  gallery.innerHTML = ""; // Clear the gallery before appending new elements
 
-    figureWork.append(imageWork, captionWork);
-    document.querySelector(".gallery").appendChild(figureWork);
-  }
+  works.forEach(work => {
+      let figureWork = document.createElement("figure");
+      let imageWork = document.createElement("img");
+      let captionWork = document.createElement("figcaption");
+
+      imageWork.src = work.imageUrl;
+      imageWork.alt = work.title;
+      captionWork.innerText = work.title;
+
+      figureWork.append(imageWork, captionWork);
+      gallery.appendChild(figureWork);
+  });
 }
 
+// Build the filter buttons
 function buildFilters(categories) {
   const filtersContainer = document.querySelector(".filters");
-  
-  // Création d'un bouton "Toutes les catégories"
+
+  // Create a button for "All Categories"
   const allButton = document.createElement("button");
   allButton.textContent = "Tous";
   allButton.addEventListener("click", () => {
-    // Afficher toutes les œuvres
-    showAllWorks();
+      showAllWorks();
   });
   filtersContainer.appendChild(allButton);
 
-  // Création d'un bouton pour chaque catégorie
-  categories.forEach((category) => {
-    const button = document.createElement("button");
-    button.textContent = category.name;
-    button.addEventListener("click", () => {
-      // Filtrer les œuvres en fonction de la catégorie
-      filterWorksByCategory(category.id);
-    });
-    filtersContainer.appendChild(button);
+  // Create a button for each category
+  categories.forEach(category => {
+      const button = document.createElement("button");
+      button.textContent = category.name;
+      button.addEventListener("click", () => {
+          filterWorksByCategory(category.id);
+      });
+      filtersContainer.appendChild(button);
   });
-  
 }
-console.log(buildFilters);
 
-
+// Show all works
 function showAllWorks() {
-  const gallery = document.querySelector(".gallery");
-  // Supprimer toutes les œuvres actuellement affichées
-  gallery.innerHTML = "";
-  // Re-construire la galerie avec toutes les œuvres
-  getWorks().then((works) => buildGallery(works, "mainGallery"));
+  getWorks().then(works => buildGallery(works));
 }
+
 
 function filterWorksByCategory(categoryId) {
-  const gallery = document.querySelector(".gallery");
-  // Supprimer toutes les œuvres actuellement affichées
-  gallery.innerHTML = "";
-  // Récupérer les œuvres de la catégorie spécifiée
-  getWorks().then((works) => {
-    const filteredWorks = works.filter((work) => work.category === categoryId);
-    // Re-construire la galerie avec les œuvres filtrées
-    buildGallery(filteredWorks, "mainGallery");
-  });
-}
-
-
-
+  getWorks().then(works => {
+      const filteredWorks = works.filter(work => work.categoryId === categoryId);
+      if (filteredWorks.length > 0) {
+          buildGallery(filteredWorks);
+      } else {
+          const gallery = document.querySelector(".gallery");
+          gallery.innerHTML = "<p>Aucune œuvre trouvée pour cette catégorie.</p>";
+      }
+   })
+  };

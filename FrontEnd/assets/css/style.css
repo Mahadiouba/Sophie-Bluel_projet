@@ -321,6 +321,16 @@ input[type="submit"]{
 	flex-direction: column;
 	align-items: center;
 }
+
+.login__form input[type=submit]:hover {
+	color: #1D6154;
+	background-color: white;
+	scale: 1.05;
+}
+  
+.login a:hover {
+	color: #B1663C;
+}
   
 .form-group-photo {
 	display: flex;
@@ -422,7 +432,7 @@ input[type="submit"]{
 	position: absolute;
 	bottom: 120px;
 }
-  
+
 
 /* FOOTER */
 
