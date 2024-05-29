@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <title>Sophie Bluel - Architecte d'intérieur</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    ,
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,16 +12,24 @@
     />
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/css/style.css" />
+    <script type="module" src="./assets/script/admin.js"></script>
     <script
       src="https://kit.fontawesome.com/a7d2f1db30.js"
       crossorigin="anonymous"
     ></script>
-    <script src="./assets/script/script.js" defer></script>
   </head>
 
   <!-- MODULE ADMIN -->
+  <aside
+    class="admin__rod admin__modifier"
+    aria-hidden="true"
+  >
+    <div class="admin__modifier">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <p>Mode édition</p>
+    </div>
+  </aside>
 
-  
 
   <body>
     <header>
@@ -31,7 +38,7 @@
         <ul>
           <li>projets</li>
           <li>contact</li>
-          <a href="login.html"><li>login</li></a>
+          <a href="login.html"><li>logout</li></a>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
@@ -61,8 +68,13 @@
         </article>
       </section>
       <section id="portfolio">
-        <h2>Mes Projets</h2>
-
+        <div class="titre__projet">
+          <h2>Mes Projets</h2>
+          <div class="admin__modifer">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <a href="#" class="js__modale">Modifier</a>
+          </div>
+        </div>
         <!-- CREER UN FILTRE ICI -->
         <div class="filters"></div>
 
