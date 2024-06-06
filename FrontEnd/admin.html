@@ -12,7 +12,7 @@
     />
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <script type="module" src="./assets/script/admin.js"></script>
+    <script src="./assets/script/admin.js"></script>
     <script
       src="https://kit.fontawesome.com/a7d2f1db30.js"
       crossorigin="anonymous"
@@ -20,16 +20,27 @@
   </head>
 
   <!-- MODULE ADMIN -->
-  <aside
-    class="admin__rod admin__modifier"
-    aria-hidden="true"
-  >
+  <aside class="admin__rod admin__modifier" aria-hidden="true">
     <div class="admin__modifier">
       <i class="fa-solid fa-pen-to-square"></i>
       <p>Mode édition</p>
     </div>
   </aside>
 
+  <!-- Fenêtre modale -->
+  <aside id="modale" class="modale" aria-hidden="true" style="display: none">
+    <div class="modale-wrapper js-modale">
+      <a href="#" class="js-modale-close">
+        <i class="fa-solid fa-xmark"></i>
+      </a>
+      <h2>Galerie photo</h2>
+      <div class="js-admin-projets">
+        <!-- génération des photos dynamiquement -->
+      </div>
+      <button class="js-modale-projet">Ajouter une photo</button>
+      
+    </div>
+  </aside>
 
   <body>
     <header>
@@ -70,9 +81,11 @@
       <section id="portfolio">
         <div class="titre__projet">
           <h2>Mes Projets</h2>
-          <div class="admin__modifer">
-            <i class="fa-solid fa-pen-to-square"></i>
-            <a href="#" class="js__modale">Modifier</a>
+          <div class="button__admin__modifier">
+            <button class="button__modifier">
+              <i class="fa-solid fa-pen-to-square"></i>
+              <a href="#" class="js__modale">Modifier</a>
+            </button>
           </div>
         </div>
         <!-- CREER UN FILTRE ICI -->

@@ -88,35 +88,6 @@ function filterWorksByCategory(categoryId) {
 
 /* Modale */
 
-// Reset la section projets
-function resetmodaleSectionProjets() {  
-	modaleSectionProjets.innerHTML = "";
-}
 
 
-// Ouverture de la modale
-let modale = null;
-let dataAdmin;
-const modaleSectionProjets = document.querySelector(".js-admin-projets"); 
 
-const openModale = function(e) {
-    e.preventDefault()
-    modale = document.querySelector(e.target.getAttribute("href"))
-
-    modaleProjets(); // Génère les projets dans la modale admin
-    // attendre la fin de la génération des projets
-    setTimeout(() => {
-        modale.style.display = null
-        modale.removeAttribute("aria-hidden")
-        modale.setAttribute("aria-modal", "true")
-    }, 25);
-    // Ajout EventListener sur les boutons pour ouvrir la modale projet
-    document.querySelectorAll(".js-modale-projet").forEach(a => {
-        a.addEventListener("click", openModaleProjet)});
-
-    // Apl fermeture modale
-    modale.addEventListener("click", closeModale)
-    modale.querySelector(".js-modale-close").addEventListener("click", closeModale)
-    modale.querySelector(".js-modale-stop").addEventListener("click", stopPropagation)
-
-};

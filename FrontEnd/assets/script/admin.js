@@ -42,4 +42,49 @@ function buildGallery(works) {
     gallery.appendChild(figureWork);
   });
 }
+/*
+let modifier = document.querySelector('.buton__modifier');
 
+modifier.addEventListener(click , () => {
+
+})*/
+
+document.addEventListener("DOMContentLoaded", () => {
+  const modale = document.getElementById("modale");
+  const openModalButtons = document.querySelectorAll(".js__modale");
+  const closeModalButton = modale.querySelector(".js-modale-close");
+
+  // Fonction pour ouvrir la modale
+  function openModal() {
+    modale.style.display = "flex";
+    modale.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  // Fonction pour fermer la modale
+  function closeModal() {
+    modale.style.display = "none";
+    modale.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  // Ajouter des écouteurs d'événements pour ouvrir et fermer la modale
+  openModalButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      openModal();
+    });
+  });
+
+  closeModalButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    closeModal();
+  });
+
+  // Fermer la modale en cliquant en dehors de son contenu
+  window.addEventListener("click", (event) => {
+    if (event.target === modale) {
+      closeModal();
+    }
+  });
+});
