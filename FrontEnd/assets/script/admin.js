@@ -87,4 +87,28 @@ document.addEventListener("DOMContentLoaded", () => {
       closeModal();
     }
   });
+  
+
+  (() => {
+    getWorks().then((works) => buildGalleryModale(works, ".js-admin-projets"));
+  })();
+
+  function buildGalleryModale(works) {
+    const galleryModale = document.querySelector(".js-admin-projets");
+    galleryModale.innerHTML = ""; // Clear the gallery before appending new elements
+    const modifier = document.querySelector(".js__modale");
+    modifier.addEventListener("click", () => {});
+    works.forEach((work) => {
+      let figureWork = document.createElement("figure");
+      let imageWork = document.createElement("img");
+      let edit = document.createElement('p')
+  
+      imageWork.src = work.imageUrl;
+      imageWork.alt = work.title;
+      edit.innerText = "Éditer";
+  
+      figureWork.append(imageWork, edit);
+      galleryModale.appendChild(figureWork);
+    });
+  }
 });

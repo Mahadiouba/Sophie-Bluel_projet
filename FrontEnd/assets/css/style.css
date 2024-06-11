@@ -451,7 +451,7 @@ input[type="submit"]{
     align-items: center;
     border: none;
     background: none;
-    color: #1D6154;
+    color: black;
     font-family: "Syne", sans-serif;
     font-weight: 700;
     font-size: 16px;
@@ -485,6 +485,13 @@ input[type="submit"]{
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     animation: fadeIn 0.2s both;
+}
+
+.modale-wrapper .fa-xmark {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
 }
 
 .modale-wrapper {
@@ -521,14 +528,48 @@ input[type="submit"]{
 }
 
 .js-admin-projets {
-    width: 550px;
-    margin: 10px auto;
     display: flex;
     flex-wrap: wrap;
+    gap: 10px;
+	margin: auto;
+}
+
+.js-admin-projets img {
+    width: 100px;
+    object-fit: cover;
+}
+
+.gallery__item-modale {
+    display: flex;
+    flex-direction: column;
+    margin: 0 5px;
+    width: 95px;
+}
+
+.gallery__item-modale img {
+    width: 95px;
+    height: 120px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    margin-bottom: 5px;
+	border-radius: inherit;
+}
+
+.gallery__item-modale a {
+    margin-top: 10px;
 }
 
 
-button.js-modale-projet {
+.js-admin-projets::after {
+    display: flex;
+    content: " ";
+    border-top: 1px solid black;
+    height: 1px;
+    width: 90%;
+    margin: 40px auto;
+}
+
+button.js-modale-add {
     font-family: "Syne";
     font-weight: 700;
     color: white;
@@ -541,12 +582,6 @@ button.js-modale-projet {
     border-radius: 60px;
 	align-self: center;
 }
-
-button .js-modale {
-	
-}
-
-
 
 
 
