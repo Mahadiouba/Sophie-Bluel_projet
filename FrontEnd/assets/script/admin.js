@@ -1,4 +1,4 @@
-// get works from DataBase
+// Fonction pour récupérer les travaux depuis la base de données
 async function getWorks() {
   try {
     const worksDB = await fetch("http://localhost:5678/api/works");
@@ -8,7 +8,8 @@ async function getWorks() {
     window.alert(error);
   }
 }
-// get Categoriers from DataBase
+
+// Fonction pour récupérer les catégories depuis la base de données
 async function getCategories() {
   try {
     const categoriesDB = await fetch("http://localhost:5678/api/categories");
@@ -19,15 +20,10 @@ async function getCategories() {
   }
 }
 
-(() => {
-  getWorks().then((works) => buildGallery(works, "mainGallery"));
-  getCategories().then((categories) => buildFilters(categories));
-})();
-
-// Build the gallery with works
+// Fonction pour construire la galerie principale
 function buildGallery(works) {
   const gallery = document.querySelector(".gallery");
-  gallery.innerHTML = ""; // Clear the gallery before appending new elements
+  gallery.innerHTML = ""; // Vider la galerie avant d'ajouter de nouveaux éléments
 
   works.forEach((work) => {
     let figureWork = document.createElement("figure");
@@ -42,17 +38,37 @@ function buildGallery(works) {
     gallery.appendChild(figureWork);
   });
 }
-/*
-let modifier = document.querySelector('.buton__modifier');
 
-modifier.addEventListener(click , () => {
+// Fonction pour construire la galerie dans la modale
+function buildGalleryModale(works) {
+  const galleryModale = document.querySelector(".js-admin-projets");
+  galleryModale.innerHTML = ""; // Vider la galerie avant d'ajouter de nouveaux éléments
 
-})*/
+  works.forEach((work) => {
+    let figureWork = document.createElement("figure");
+    let imageWork = document.createElement("img");
+
+    imageWork.src = work.imageUrl;
+    imageWork.alt = work.title;
+
+    figureWork.append(imageWork);
+    galleryModale.appendChild(figureWork);
+  });
+}
 
 document.addEventListener("DOMContentLoaded", () => {
+  getWorks().then((works) => {
+    buildGallery(works);
+    buildGalleryModale(works);
+  });
+
+  getCategories().then((categories) => {
+    buildFilters(categories);
+  });
+
   const modale = document.getElementById("modale");
   const openModalButtons = document.querySelectorAll(".js__modale");
-  const closeModalButton = modale.querySelector(".js-modale-close");
+  const closeModalButton = document.querySelector(".js-modale-close");
 
   // Fonction pour ouvrir la modale
   function openModal() {
@@ -87,28 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
       closeModal();
     }
   });
-  
-
-  (() => {
-    getWorks().then((works) => buildGalleryModale(works, ".js-admin-projets"));
-  })();
-
-  function buildGalleryModale(works) {
-    const galleryModale = document.querySelector(".js-admin-projets");
-    galleryModale.innerHTML = ""; // Clear the gallery before appending new elements
-    const modifier = document.querySelector(".js__modale");
-    modifier.addEventListener("click", () => {});
-    works.forEach((work) => {
-      let figureWork = document.createElement("figure");
-      let imageWork = document.createElement("img");
-      let edit = document.createElement('p')
-  
-      imageWork.src = work.imageUrl;
-      imageWork.alt = work.title;
-      edit.innerText = "Éditer";
-  
-      figureWork.append(imageWork, edit);
-      galleryModale.appendChild(figureWork);
-    });
-  }
 });
+
+/*************MODALEPROJET************ */

@@ -85,9 +85,4 @@ function filterWorksByCategory(categoryId) {
   });
 }
 
-
 /* Modale */
-
-
-
-
