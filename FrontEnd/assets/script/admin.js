@@ -56,6 +56,8 @@ function buildGalleryModale(works) {
   });
 }
 
+/*************MODALEPROJET************ */
+
 document.addEventListener("DOMContentLoaded", () => {
   getWorks().then((works) => {
     buildGallery(works);
@@ -67,24 +69,41 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const modale = document.getElementById("modale");
+  const modaleProjet = document.getElementById("modaleProjet");
   const openModalButtons = document.querySelectorAll(".js__modale");
-  const closeModalButton = document.querySelector(".js-modale-close");
+  const closeModalButtons = document.querySelectorAll(".js-modale-close");
+  const addPhotoButton = document.querySelector(".js-modale-add");
+  const returnButton = document.querySelector(".js-modale-return");
 
-  // Fonction pour ouvrir la modale
+  // Fonction pour ouvir la fenêtre modale
   function openModal() {
     modale.style.display = "flex";
     modale.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
   }
 
-  // Fonction pour fermer la modale
+  // Fonction pour fermer la fenêtre modale
   function closeModal() {
     modale.style.display = "none";
     modale.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
   }
 
-  // Ajouter des écouteurs d'événements pour ouvrir et fermer la modale
+  // Fonction pour ouvir la fenêtre modale projet
+  function openModalProjet() {
+    modaleProjet.style.display = "flex";
+    modaleProjet.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  // Fonction pour fermer la fenêtre modale projet
+  function closeModalProjet() {
+    modaleProjet.style.display = "none";
+    modaleProjet.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  // Ajout d'écouteurs d'évènement pour ouvrir et fermer la fe fenêtre modale
   openModalButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
       event.preventDefault();
@@ -92,9 +111,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  closeModalButton.addEventListener("click", (event) => {
+  closeModalButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      closeModal();
+      closeModalProjet();
+    });
+  });
+
+  // Ajout d'écouteurs d'évènement pour ouvrir la fenêtre modale projet
+  addPhotoButton.addEventListener("click", (event) => {
     event.preventDefault();
     closeModal();
+    openModalProjet();
+  });
+
+  // Ajout d'écouteurs d'évènement pou retourner à la fenêtre modale depuis la fenêtre modale projet
+  returnButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    closeModalProjet();
+    openModal();
   });
 
   // Fermer la modale en cliquant en dehors de son contenu
@@ -102,7 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.target === modale) {
       closeModal();
     }
+    if (event.target === modaleProjet) {
+      closeModalProjet();
+    }
   });
 });
-
-/*************MODALEPROJET************ */

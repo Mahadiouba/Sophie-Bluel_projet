@@ -626,10 +626,32 @@ input[type="submit"] {
 	margin: 20px 0 50px 0;
 }
 
-.js-modale-close {
-	display: flex;
-	justify-content: flex-end;
-	color: black;
+.modale-close-button {
+	position: relative;
+	top: -15px;
+	font-size: 1.5em;
+	cursor: pointer;
+	color: #000;
+	text-decoration: none;
+}
+
+.modale-close-button i {
+	color: #000;
+}
+
+.delete-button {
+	position: relative;
+	top: 10px;
+	right: 10px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: red;
+	font-size: 1.5em;
+}
+
+.delete-button i {
+	pointer-events: none;
 }
 
 .js-admin-projets {
