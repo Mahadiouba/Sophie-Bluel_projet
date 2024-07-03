@@ -456,6 +456,7 @@ input[type="submit"] {
 	font-weight: 100;
 	margin: 20px;
 	margin-top: -25px;
+	position: absolute;
 }
 
 .form-group-photo input {
@@ -468,18 +469,17 @@ input[type="submit"] {
 	justify-content: center;
 	align-items: center;
 	width: 200px;
-	height: 40px;
+	height: 20px;
 	background-color: #CBD6DC;
 	color: #306685;
 	border-radius: 50px;
 	cursor: pointer;
-	margin-top: -10px;
+	margin-bottom: -100px;
 }
 
-.form-group-photo::after {
-	content: "jpg, png : 4mo max";
-	position: absolute;
-	top: 315px;
+.form-group-photo label:hover {
+	color: white;
+	background-color: #306685;
 }
 
 .form-group-title {
@@ -688,6 +688,40 @@ input[type="submit"] {
 	margin-top: 10px;
 }
 
+.form-group-photo {
+	text-align: center;
+	margin-bottom: 1em;
+}
+
+.add-photo-label {
+	display: inline-block;
+	background-color: #f0f0f0;
+	padding: 10px;
+	border: 2px dashed #ccc;
+	cursor: pointer;
+	width: 100%;
+	max-width: 300px;
+	margin: auto;
+	position: absolute;
+}
+
+.add-photo-label input {
+	display: none;
+}
+
+#image-preview {
+	width: 30%;
+	max-width: 300px;
+	height: 200px;
+	background-size: cover;
+	background-position: center;
+	margin: 10px auto;
+	border: 1px solid #ccc;
+}
+
+.hidden {
+	display: none;
+  }
 
 .js-admin-projets::after {
 	display: flex;
@@ -741,15 +775,6 @@ button.js-modale-add {
 	width: 250px;
 	height: 40px;
 }
-
-.form-group-photo::after {
-	content: "jpg, png : 4mo max";
-	position: inherit;
-	top: 315px;
-	margin-top: 10px;
-}
-
-
 
 /* FOOTER */
 

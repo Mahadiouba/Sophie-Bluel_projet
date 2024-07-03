@@ -47,49 +47,39 @@
     </div>
   </aside>
   <!-- Modale Ajout Projet -->
-  <aside
-    id="modaleProjet"
-    class="modale-projet"
-    aria-hidden="true"
-    style="display: none"
-  >
+  <aside id="modaleProjet" class="modale-projet" aria-hidden="true" style="display: none">
     <div class="modale-wrapper js-modale">
       <div class="modale-projet-logo">
-        <a href="" class="js-modale-return">
+        <a href="#" class="js-modale-return">
           <i class="fa-solid fa-arrow-left"></i>
         </a>
         <a href="#" class="js-modale-close modale-close-button">
           <i class="fa-solid fa-xmark"></i>
         </a>
       </div>
-
       <h2>Ajout d'un projet</h2>
-
-      <form class="modale-projet-form" action="" enctype="multipart/form-data">
+      <form id="add-photo-form" class="modale-projet-form" enctype="multipart/form-data">
         <div class="form-group-photo">
           <i class="fa-regular fa-image"></i>
-          <label for="photo">+ Ajouter une photo</label>
-          <input type="file" name="photo" id="photo" class="js-image" />
+          <label class="add-photo-label" for="photo">+ Ajouter une photo</label>
+          <input type="file" name="photo" id="photo" />
+          <div id="image-preview" class="hidden"></div>
+          <p>jpg, png : 4mo max</p>
         </div>
-
         <div class="form-group-title">
           <label for="titre">Titre</label>
-          <input class="js-title" type="text" name="titre" id="titre" />
+          <input type="text" name="titre" id="titre" />
         </div>
-
         <div class="form-group-id">
           <label for="categorie">Catégorie</label>
-          <select name="categorie" id="categorie" class="js-categoryId">
-            <option value="1">Objets</option>
-            <option value="2">Appartements</option>
-            <option value="3">Hôtels & restaurants</option>
-          </select>
+          <select name="categorie" id="categorie"></select>
         </div>
-
-        <input type="submit" class="js-add-work" value="Valider" />
+        <input type="submit" value="Valider" class="js-add-work"/>
       </form>
     </div>
   </aside>
+  
+  
 
   <body>
     <header>
