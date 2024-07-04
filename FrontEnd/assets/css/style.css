@@ -433,6 +433,7 @@ input[type="submit"] {
 	color: #1D6154;
 	background-color: white;
 	scale: 1.05;
+	cursor: pointer;
 }
 
 .login a:hover {
@@ -691,6 +692,11 @@ input[type="submit"] {
 .form-group-photo {
 	text-align: center;
 	margin-bottom: 1em;
+	
+}
+
+.form-group-photo p{
+	
 }
 
 .add-photo-label {
@@ -721,7 +727,7 @@ input[type="submit"] {
 
 .hidden {
 	display: none;
-  }
+}
 
 .js-admin-projets::after {
 	display: flex;
@@ -744,6 +750,7 @@ button.js-modale-add {
 	text-align: center;
 	border-radius: 60px;
 	align-self: center;
+	cursor: pointer;
 }
 
 .js-modale-add:hover {
@@ -772,8 +779,23 @@ button.js-modale-add {
 }
 
 .js-add-work {
-	width: 250px;
+	
 	height: 40px;
+	font-family: 'Syne';
+    font-weight: 700;
+    color: white;
+    background-color: #1D6154;
+    margin: 2em auto;
+    width: 180px;
+    text-align: center;
+    border-radius: 60px;
+    cursor: pointer;
+}
+
+.js-add-work:hover {
+	background-color: white; 
+	color: #1D6154;
+	transition: all 0.5s ease;
 }
 
 /* FOOTER */
