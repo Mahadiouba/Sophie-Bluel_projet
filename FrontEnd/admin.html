@@ -49,36 +49,39 @@
   <!-- Modale Ajout Projet -->
   <aside id="modaleProjet" class="modale-projet" aria-hidden="true" style="display: none">
     <div class="modale-wrapper js-modale">
-      <div class="modale-projet-logo">
-        <a href="#" class="js-modale-return">
-          <i class="fa-solid fa-arrow-left"></i>
-        </a>
-        <a href="#" class="js-modale-close modale-close-button">
-          <i class="fa-solid fa-xmark"></i>
-        </a>
-      </div>
-      <h2>Ajout d'un projet</h2>
-      <form id="add-photo-form" class="modale-projet-form" enctype="multipart/form-data">
-        <div class="form-group-photo">
-          <i class="fa-regular fa-image"></i>
-          <label class="add-photo-label" for="photo">+ Ajouter une photo</label>
-          <input type="file" name="photo" id="photo" />
-          <div id="image-preview" class="hidden"></div>
-          <!--<p>jpg, png : 4mo max</p>-->
+        <div class="modale-projet-logo">
+            <a href="#" class="js-modale-return">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <a href="#" class="js-modale-close modale-close-button">
+                <i class="fa-solid fa-xmark"></i>
+            </a>
         </div>
-        <div class="form-group-title">
-          <label for="titre">Titre</label>
-          <input type="text" name="titre" id="titre" />
-        </div>
-        <div class="form-group-id">
-          <label for="categorie">Catégorie</label>
-          <select name="categorie" id="categorie"></select>
-        </div>
-        <button type="submit" class="js-add-work">Valider</button>
-
-      </form>
+        <h2>Ajout d'un projet</h2>
+        <form id="add-photo-form" class="modale-projet-form" enctype="multipart/form-data">
+            <div class="form-group-photo">
+              <div id="photo-icon">
+                <i class="fa-regular fa-image"></i>
+              </div>
+                <label class="add-photo-label" for="photo">+ Ajouter une photo</label>
+                <input type="file" name="photo" id="photo" />
+                <div id="image-preview" class="hidden"></div>
+                <!--<p>jpg, png : 4mo max</p>-->
+            </div>
+            <div class="form-group-title">
+                <label for="titre">Titre</label>
+                <input type="text" name="titre" id="titre" />
+            </div>
+            <div class="form-group-id">
+                <label for="categorie">Catégorie</label>
+                <select name="categorie" id="categorie"></select>
+            </div>
+            <button type="submit" class="js-add-work">Valider</button>
+        </form>
     </div>
-  </aside>
+</aside>
+
+
   
   
 

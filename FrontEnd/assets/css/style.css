@@ -457,7 +457,7 @@ input[type="submit"] {
 	font-weight: 100;
 	margin: 20px;
 	margin-top: -25px;
-	position: absolute;
+	/*position: absolute;*/
 }
 
 .form-group-photo input {
@@ -640,21 +640,6 @@ input[type="submit"] {
 	color: #000;
 }
 
-.delete-button {
-	position: relative;
-	top: 10px;
-	right: 10px;
-	background: transparent;
-	border: none;
-	cursor: pointer;
-	color: red;
-	font-size: 1.5em;
-}
-
-.delete-button i {
-	pointer-events: none;
-}
-
 .js-admin-projets {
 	display: flex;
 	flex-wrap: wrap;
@@ -667,6 +652,26 @@ input[type="submit"] {
 	height: 120px;
 	object-fit: cover;
 	margin-bottom: 5px;
+}
+
+.js-admin-projets figure {
+	position: relative;
+	/* Pour positionner l'icône de suppression à l'intérieur du figure */
+}
+
+.js-admin-projets .delete-icon {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: white;
+	cursor: pointer;
+	font-size: 20px;
+	background: black;
+    padding: 2px;
+}
+
+.gallery .delete-icon {
+	display: none;
 }
 
 .gallery__item-modale {
@@ -692,12 +697,8 @@ input[type="submit"] {
 .form-group-photo {
 	text-align: center;
 	margin-bottom: 1em;
-	
 }
 
-.form-group-photo p{
-	
-}
 
 .add-photo-label {
 	display: inline-block;
@@ -727,6 +728,10 @@ input[type="submit"] {
 
 .hidden {
 	display: none;
+}
+
+.invisible {
+	visibility: hidden;
 }
 
 .js-admin-projets::after {
@@ -779,21 +784,21 @@ button.js-modale-add {
 }
 
 .js-add-work {
-	
+
 	height: 40px;
 	font-family: 'Syne';
-    font-weight: 700;
-    color: white;
-    background-color: #1D6154;
-    margin: 2em auto;
-    width: 180px;
-    text-align: center;
-    border-radius: 60px;
-    cursor: pointer;
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin: 2em auto;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px;
+	cursor: pointer;
 }
 
 .js-add-work:hover {
-	background-color: white; 
+	background-color: white;
 	color: #1D6154;
 	transition: all 0.5s ease;
 }
