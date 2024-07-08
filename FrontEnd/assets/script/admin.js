@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const imagePreview = document.getElementById("image-preview");
   const photoIcon = document.getElementById("photo-icon");
   const addPhotoForm = document.getElementById("add-photo-form");
-  const addPhotoLabel = document.querySelector(".add-photo-label");
+  const addPhotoLabel = document.getElementById("photo-add");
 
   function openModal() {
     modale.style.display = "flex";
