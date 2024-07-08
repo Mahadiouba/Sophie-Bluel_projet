@@ -161,8 +161,8 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("Erreur lors de l'ajout de la photo");
       }
 
-      const newWork = await response.json(); // Récupère la réponse de l'API
-      console.log("New Work ajouté:", newWork); // Affiche la réponse dans la console
+      const newWork = await response.json();
+      
 
       alert("Photo ajoutée avec succès!");
       addPhotoForm.reset();
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
     figureWorkModale.append(imageWorkModale, deleteIcon);
     galleryModale.appendChild(figureWorkModale);
 
-    // Ajouter un écouteur d'événements pour la nouvelle icône de suppression
+    // Ajouter un écouteur d'événements pour l'icône de suppression
     deleteIcon.addEventListener("click", async (event) => {
       const workId = event.target.getAttribute("data-id");
       await deleteWork(workId);
