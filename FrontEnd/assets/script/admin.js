@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let captionWork = document.createElement("figcaption");
       imageWork.src = work.imageUrl;
       imageWork.alt = work.title;
-      imageWork.setAttribute("data-url", work.imageUrl);
+      imageWork.setAttribute("data-id", work.id); // Utilisez data-id au lieu de data-url
       captionWork.innerText = work.title;
       figureWork.append(imageWork, captionWork);
       gallery.appendChild(figureWork);
@@ -49,31 +49,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
       imageWork.src = work.imageUrl;
       imageWork.alt = work.title;
-      imageWork.setAttribute("data-url", work.imageUrl);
+      imageWork.setAttribute("data-id", work.id); // Utilisez data-id au lieu de data-url
 
       deleteIcon.classList.add("fa", "fa-trash", "delete-icon");
-      deleteIcon.setAttribute("data-url", work.imageUrl);
+      deleteIcon.setAttribute("data-id", work.id); // Utilisez data-id au lieu de data-url
 
       figureWork.append(imageWork, deleteIcon);
       galleryModale.appendChild(figureWork);
 
       // Ajouter un écouteur d'événements pour l'icône de suppression
       deleteIcon.addEventListener("click", async (event) => {
-        const workUrl = event.target.getAttribute("data-url");
-        await deleteWorkByUrl(workUrl);
+        const workId = event.target.getAttribute("data-id");
+        await deleteWorkById(workId);
         figureWork.remove();
-        removeWorkFromGalleryByUrl(workUrl);
+        removeWorkFromGalleryById(workId);
       });
     });
   }
 
-  async function deleteWorkByUrl(url) {
+  async function deleteWorkById(id) {
     try {
-      const works = await getWorks();
-      const work = works.find(w => w.imageUrl === url);
-      if (!work) throw new Error("Travail non trouvé pour la suppression");
-
-      const response = await fetch(`http://localhost:5678/api/works/${work.id}`, {
+      const response = await fetch(`http://localhost:5678/api/works/${id}`, {
         method: "DELETE",
       });
 
@@ -88,12 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function removeWorkFromGalleryByUrl(url) {
+  function removeWorkFromGalleryById(id) {
     const gallery = document.querySelector(".gallery");
     const figures = gallery.querySelectorAll("figure");
     figures.forEach((figure) => {
       const img = figure.querySelector("img");
-      if (img && img.getAttribute("data-url") === url) {
+      if (img && img.getAttribute("data-id") === id) {
         figure.remove();
       }
     });
@@ -205,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     imageWork.src = newWork.imageUrl;
     imageWork.alt = newWork.title;
-    imageWork.setAttribute("data-url", newWork.imageUrl);
+    imageWork.setAttribute("data-id", newWork.id); // Utilisez data-id au lieu de data-url
 
     captionWork.innerText = newWork.title;
 
@@ -219,19 +215,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     imageWorkModale.src = newWork.imageUrl;
     imageWorkModale.alt = newWork.title;
-    imageWorkModale.setAttribute("data-url", newWork.imageUrl);
+    imageWorkModale.setAttribute("data-id", newWork.id); // Utilisez data-id au lieu de data-url
 
     deleteIcon.classList.add("fa", "fa-trash", "delete-icon");
-    deleteIcon.setAttribute("data-url", newWork.imageUrl);
+    deleteIcon.setAttribute("data-id", newWork.id); // Utilisez data-id au lieu de data-url
 
     figureWorkModale.append(imageWorkModale, deleteIcon);
     galleryModale.appendChild(figureWorkModale);
 
     deleteIcon.addEventListener("click", async (event) => {
-      const workUrl = event.target.getAttribute("data-url");
-      await deleteWorkByUrl(workUrl);
+      const workId = event.target.getAttribute("data-id");
+      await deleteWorkById(workId);
       figureWorkModale.remove();
-      removeWorkFromGalleryByUrl(workUrl);
+      removeWorkFromGalleryById(workId);
     });
   }
 
@@ -240,16 +236,24 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   closeModalButtons.forEach((button) => {
-    button.addEventListener("click", closeModal);
+    button.addEventListener("click", (event) => {
+      const isModaleProjet = event.target.closest(".modale-projet") !== null;
+      if (isModaleProjet) {
+        closeModalProjet();
+      } else {
+        closeModal();
+      }
+    });
   });
 
   addPhotoButton.addEventListener("click", openModalProjet);
   returnButton.addEventListener("click", closeModalProjet);
 
-  (async () => {
-    const works = await getWorks();
+  // Chargement initial
+  getWorks().then((works) => {
     buildGallery(works);
     buildGalleryModale(works);
-    await getCategories();
-  })();
+  });
+
+  getCategories();
 });
