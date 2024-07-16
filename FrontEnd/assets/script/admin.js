@@ -2,8 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function getWorks() {
     try {
       const response = await fetch("http://localhost:5678/api/works");
-      if (!response.ok)
-        throw new Error("Erreur lors de la récupération des travaux");
+      if (!response.ok) throw new Error("Erreur lors de la récupération des travaux");
       const works = await response.json();
       return works;
     } catch (error) {
@@ -15,8 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function getCategories() {
     try {
       const response = await fetch("http://localhost:5678/api/categories");
-      if (!response.ok)
-        throw new Error("Erreur lors de la récupération des catégories");
+      if (!response.ok) throw new Error("Erreur lors de la récupération des catégories");
       const categories = await response.json();
       populateCategoryOptions(categories);
     } catch (error) {
@@ -34,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let captionWork = document.createElement("figcaption");
       imageWork.src = work.imageUrl;
       imageWork.alt = work.title;
+      imageWork.setAttribute("data-url", work.imageUrl);
       captionWork.innerText = work.title;
       figureWork.append(imageWork, captionWork);
       gallery.appendChild(figureWork);
@@ -50,32 +49,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
       imageWork.src = work.imageUrl;
       imageWork.alt = work.title;
+      imageWork.setAttribute("data-url", work.imageUrl);
 
       deleteIcon.classList.add("fa", "fa-trash", "delete-icon");
-      deleteIcon.setAttribute("data-id", work.id);
+      deleteIcon.setAttribute("data-url", work.imageUrl);
 
       figureWork.append(imageWork, deleteIcon);
       galleryModale.appendChild(figureWork);
-    });
 
-    // Ajouter des écouteurs d'événements pour les icônes de suppression
-    const deleteIcons = document.querySelectorAll(".delete-icon");
-    deleteIcons.forEach((icon) => {
-      icon.addEventListener("click", async (event) => {
-        const workId = event.target.getAttribute("data-id");
-        await deleteWork(workId);
+      // Ajouter un écouteur d'événements pour l'icône de suppression
+      deleteIcon.addEventListener("click", async (event) => {
+        const workUrl = event.target.getAttribute("data-url");
+        await deleteWorkByUrl(workUrl);
+        figureWork.remove();
+        removeWorkFromGalleryByUrl(workUrl);
       });
     });
   }
 
-  async function deleteWork(workId) {
+  async function deleteWorkByUrl(url) {
     try {
-      const response = await fetch(
-        `http://localhost:5678/api/works/${workId}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const works = await getWorks();
+      const work = works.find(w => w.imageUrl === url);
+      if (!work) throw new Error("Travail non trouvé pour la suppression");
+
+      const response = await fetch(`http://localhost:5678/api/works/${work.id}`, {
+        method: "DELETE",
+      });
 
       if (!response.ok) {
         throw new Error("Erreur lors de la suppression de la photo");
@@ -86,6 +86,17 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Erreur:", error);
       alert("Erreur lors de la suppression de la photo");
     }
+  }
+
+  function removeWorkFromGalleryByUrl(url) {
+    const gallery = document.querySelector(".gallery");
+    const figures = gallery.querySelectorAll("figure");
+    figures.forEach((figure) => {
+      const img = figure.querySelector("img");
+      if (img && img.getAttribute("data-url") === url) {
+        figure.remove();
+      }
+    });
   }
 
   function populateCategoryOptions(categories) {
@@ -158,61 +169,69 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (!response.ok) {
-        throw new Error("Erreur lors de l'ajout de la photo");
+        const errorData = await response.json();
+        throw new Error(`Erreur lors de l'ajout de la photo: ${errorData.message}`);
       }
 
       const newWork = await response.json();
-      
 
       alert("Photo ajoutée avec succès!");
       addPhotoForm.reset();
       imagePreview.style.backgroundImage = "";
       imagePreview.classList.add("hidden");
+      photoIcon.classList.remove("hidden");
       addPhotoLabel.classList.remove("hidden");
 
-      // Ajoute la nouvelle photo directement à la galerie
       addNewWorkToGallery(newWork);
 
       closeModalProjet();
     } catch (error) {
       console.error("Erreur:", error);
       alert("Erreur lors de l'ajout de la photo");
+
+      addPhotoForm.reset();
+      imagePreview.style.backgroundImage = "";
+      imagePreview.classList.add("hidden");
+      photoIcon.classList.remove("hidden");
+      addPhotoLabel.classList.remove("hidden");
     }
   });
 
-  function addNewWorkToGallery(work) {
-    // Met à jour la galerie principale
+  function addNewWorkToGallery(newWork) {
     const gallery = document.querySelector(".gallery");
     let figureWork = document.createElement("figure");
     let imageWork = document.createElement("img");
     let captionWork = document.createElement("figcaption");
 
-    imageWork.src = work.imageUrl;
-    imageWork.alt = work.title;
-    captionWork.innerText = work.title;
+    imageWork.src = newWork.imageUrl;
+    imageWork.alt = newWork.title;
+    imageWork.setAttribute("data-url", newWork.imageUrl);
+
+    captionWork.innerText = newWork.title;
 
     figureWork.append(imageWork, captionWork);
     gallery.appendChild(figureWork);
 
-    // Met à jour la galerie dans la modale
     const galleryModale = document.querySelector(".js-admin-projets");
     let figureWorkModale = document.createElement("figure");
     let imageWorkModale = document.createElement("img");
     let deleteIcon = document.createElement("i");
 
-    imageWorkModale.src = work.imageUrl;
-    imageWorkModale.alt = work.title;
+    imageWorkModale.src = newWork.imageUrl;
+    imageWorkModale.alt = newWork.title;
+    imageWorkModale.setAttribute("data-url", newWork.imageUrl);
 
     deleteIcon.classList.add("fa", "fa-trash", "delete-icon");
-    deleteIcon.setAttribute("data-id", work.id);
+    deleteIcon.setAttribute("data-url", newWork.imageUrl);
 
     figureWorkModale.append(imageWorkModale, deleteIcon);
     galleryModale.appendChild(figureWorkModale);
 
-    // Ajouter un écouteur d'événements pour l'icône de suppression
     deleteIcon.addEventListener("click", async (event) => {
-      const workId = event.target.getAttribute("data-id");
-      await deleteWork(workId);
+      const workUrl = event.target.getAttribute("data-url");
+      await deleteWorkByUrl(workUrl);
+      figureWorkModale.remove();
+      removeWorkFromGalleryByUrl(workUrl);
     });
   }
 
@@ -224,23 +243,13 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", closeModal);
   });
 
-  addPhotoButton.addEventListener("click", () => {
-    closeModal();
-    openModalProjet();
-  });
+  addPhotoButton.addEventListener("click", openModalProjet);
+  returnButton.addEventListener("click", closeModalProjet);
 
-  returnButton.addEventListener("click", () => {
-    closeModalProjet();
-    openModal();
-  });
-
-  getWorks().then((works) => {
+  (async () => {
+    const works = await getWorks();
     buildGallery(works);
     buildGalleryModale(works);
-  });
-
-  getCategories();
+    await getCategories();
+  })();
 });
-
-
-

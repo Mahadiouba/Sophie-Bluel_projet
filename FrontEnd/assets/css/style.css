@@ -402,6 +402,17 @@ input[type="submit"] {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
+.login__form input[type=submit]:hover {
+	color: #1D6154;
+	background-color: white;
+	scale: 1.05;
+	cursor: pointer;
+}
+
+.login a:hover {
+	color: #B1663C;
+}
+
 .login__form label {
 	margin: 3em 0 1em 0;
 }
@@ -423,21 +434,12 @@ input[type="submit"] {
 	transition: all 0.5s ease;
 }
 
+/************.    Modale et ModaleProjet    .************/
+
 .modale-projet-form {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-}
-
-.login__form input[type=submit]:hover {
-	color: #1D6154;
-	background-color: white;
-	scale: 1.05;
-	cursor: pointer;
-}
-
-.login a:hover {
-	color: #B1663C;
 }
 
 .form-group-photo {
@@ -581,7 +583,7 @@ input[type="submit"] {
 	color: #15543a;
 }
 
-/*.modale {
+.modale {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -591,30 +593,7 @@ input[type="submit"] {
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.7);
-	animation: fadeIn 0.2s both;
-}*/
-
-.modale {
-	display: none; 
-	position: fixed; 
-	top: 50%; 
-	left: 50%; 
-	transform: translate(-50%, -50%); 
-	z-index: 1000; 
-	background-color: rgba(0, 0, 0, 0.7); 
-	padding: 100%; 
 }
-
-.modale-backdrop {
-	display: none; 
-	position: fixed; 
-	top: 0; 
-	left: 0; 
-	width: 100%; 
-	height: 100%; 
-	background-color: rgba(0, 0, 0, 0.5); 
-	z-index: 999; 
-  }
 
 .modale-wrapper .fa-xmark {
 	position: absolute;
@@ -627,12 +606,9 @@ input[type="submit"] {
 	display: flex;
 	flex-direction: column;
 	overflow: auto;
-	max-width: calc(98vh - 20px);
-	max-height: calc(98vh - 20px);
 	width: 675px;
 	padding: 30px;
 	background-color: white;
-	animation: slideFromTop 0.2s both;
 }
 
 .modale-wrapper h2 {
@@ -660,9 +636,9 @@ input[type="submit"] {
 	text-decoration: none;
 }
 
-.modale-close-button i {
+/*.modale-close-button i {
 	color: #000;
-}
+}*/
 
 .js-admin-projets {
 	display: flex;
@@ -789,14 +765,10 @@ button.js-modale-add {
 }
 
 .modale-projet {
-	display: none; 
-	position: fixed; 
-	top: 50%; 
-	left: 50%; 
-	transform: translate(-50%, -50%); 
-	z-index: 1000; 
-	background-color: rgba(0, 0, 0, 0.7);
-	animation: fadeIn 0.4s both;
+	position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .modale-projet-logo {
