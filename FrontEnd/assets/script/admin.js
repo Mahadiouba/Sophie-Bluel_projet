@@ -7,19 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return works;
     } catch (error) {
       console.error("Erreur:", error);
-      alert(error);
-    }
-  }
-
-  async function getCategories() {
-    try {
-      const response = await fetch("http://localhost:5678/api/categories");
-      if (!response.ok) throw new Error("Erreur lors de la récupération des catégories");
-      const categories = await response.json();
-      populateCategoryOptions(categories);
-    } catch (error) {
-      console.error("Erreur:", error);
-      alert(error);
+      alert(error.message);
     }
   }
 
@@ -32,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let captionWork = document.createElement("figcaption");
       imageWork.src = work.imageUrl;
       imageWork.alt = work.title;
-      imageWork.setAttribute("data-url", work.imageUrl);
+      imageWork.setAttribute("data-id", work.id);
       captionWork.innerText = work.title;
       figureWork.append(imageWork, captionWork);
       gallery.appendChild(figureWork);
@@ -49,63 +37,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
       imageWork.src = work.imageUrl;
       imageWork.alt = work.title;
-      imageWork.setAttribute("data-url", work.imageUrl);
+      imageWork.setAttribute("data-id", work.id);
 
-      deleteIcon.classList.add("fa", "fa-trash", "delete-icon");
-      deleteIcon.setAttribute("data-url", work.imageUrl);
+      deleteIcon.classList.add("fa", "fa-trash", "delete-icon", "js-delete-work");
+      deleteIcon.setAttribute("data-id", work.id);
 
       figureWork.append(imageWork, deleteIcon);
       galleryModale.appendChild(figureWork);
-
-      // Ajouter un écouteur d'événements pour l'icône de suppression
-      deleteIcon.addEventListener("click", async (event) => {
-        const workUrl = event.target.getAttribute("data-url");
-        await deleteWorkByUrl(workUrl);
-        figureWork.remove();
-        removeWorkFromGalleryByUrl(workUrl);
-      });
     });
+
+    attachDeleteListeners();
   }
 
-  async function deleteWorkByUrl(url) {
-    try {
-      const works = await getWorks();
-      const work = works.find(w => w.imageUrl === url);
-      if (!work) throw new Error("Travail non trouvé pour la suppression");
-
-      const response = await fetch(`http://localhost:5678/api/works/${work.id}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        throw new Error("Erreur lors de la suppression de la photo");
-      }
-
-      console.log("Work supprimé avec succès");
-    } catch (error) {
-      console.error("Erreur:", error);
-      alert("Erreur lors de la suppression de la photo");
-    }
+  async function deleteWorkById(workId) {
+    
   }
 
-  function removeWorkFromGalleryByUrl(url) {
-    const gallery = document.querySelector(".gallery");
+  function attachDeleteListeners() {
+    let btnDelete = document.querySelectorAll(".js-delete-work");
+    btnDelete.forEach(button => button.addEventListener("click", function () {
+      const workId = this.getAttribute("data-id");
+      deleteWorkById(workId);
+    }));
+  }
+
+  function updateGalleries(workId) {
+    removeWorkFromGallery(".gallery", workId);
+    removeWorkFromGallery(".js-admin-projets", workId);
+  }
+
+  function removeWorkFromGallery(gallerySelector, workId) {
+    const gallery = document.querySelector(gallerySelector);
     const figures = gallery.querySelectorAll("figure");
     figures.forEach((figure) => {
       const img = figure.querySelector("img");
-      if (img && img.getAttribute("data-url") === url) {
+      if (img && img.getAttribute("data-id") === workId) {
         figure.remove();
       }
-    });
-  }
-
-  function populateCategoryOptions(categories) {
-    const categorySelect = document.getElementById("categorie");
-    categories.forEach((category) => {
-      let option = document.createElement("option");
-      option.value = category.id;
-      option.text = category.name;
-      categorySelect.add(option);
     });
   }
 
@@ -205,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     imageWork.src = newWork.imageUrl;
     imageWork.alt = newWork.title;
-    imageWork.setAttribute("data-url", newWork.imageUrl);
+    imageWork.setAttribute("data-id", newWork.id);
 
     captionWork.innerText = newWork.title;
 
@@ -219,20 +187,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     imageWorkModale.src = newWork.imageUrl;
     imageWorkModale.alt = newWork.title;
-    imageWorkModale.setAttribute("data-url", newWork.imageUrl);
+    imageWorkModale.setAttribute("data-id", newWork.id);
 
-    deleteIcon.classList.add("fa", "fa-trash", "delete-icon");
-    deleteIcon.setAttribute("data-url", newWork.imageUrl);
+    deleteIcon.classList.add("fa", "fa-trash", "delete-icon", "js-delete-work");
+    deleteIcon.setAttribute("data-id", newWork.id);
 
     figureWorkModale.append(imageWorkModale, deleteIcon);
     galleryModale.appendChild(figureWorkModale);
 
-    deleteIcon.addEventListener("click", async (event) => {
-      const workUrl = event.target.getAttribute("data-url");
-      await deleteWorkByUrl(workUrl);
-      figureWorkModale.remove();
-      removeWorkFromGalleryByUrl(workUrl);
-    });
+    deleteIcon.addEventListener("click", deleteProjets);
   }
 
   openModalButtons.forEach((button) => {
@@ -240,16 +203,25 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   closeModalButtons.forEach((button) => {
-    button.addEventListener("click", closeModal);
+    button.addEventListener("click", (event) => {
+      const isModaleProjet = event.target.closest(".modale-projet") !== null;
+      if (isModaleProjet) {
+        closeModalProjet();
+      } else {
+        closeModal();
+      }
+    });
   });
 
   addPhotoButton.addEventListener("click", openModalProjet);
-  returnButton.addEventListener("click", closeModalProjet);
 
-  (async () => {
-    const works = await getWorks();
+  returnButton.addEventListener("click", () => {
+    closeModalProjet();
+    openModal();
+  });
+
+  getWorks().then((works) => {
     buildGallery(works);
     buildGalleryModale(works);
-    await getCategories();
-  })();
+  });
 });
